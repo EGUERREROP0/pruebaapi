@@ -1,4 +1,5 @@
 INFORMACIÓN DEL DESARROLLADOR
+Nombre: Erminio Guerrero Paredes
 
 HABILIDADES TÉCNICAS:
 - Frontend: React, Next.js, Vue.js, TypeScript, JavaScript ES6+
