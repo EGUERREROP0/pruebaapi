@@ -1,0 +1,16 @@
+{
+  "name": "chatbot-backend",
+  "version": "1.0.0",
+  "description": "Backend para chatbot con Gemini API",
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.38.1"
+  }
+}

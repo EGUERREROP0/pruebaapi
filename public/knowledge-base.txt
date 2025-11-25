@@ -1,0 +1,50 @@
+INFORMACIÓN DEL DESARROLLADOR
+
+HABILIDADES TÉCNICAS:
+- Frontend: React, Next.js, Vue.js, TypeScript, JavaScript ES6+
+- Styling: Tailwind CSS, CSS Modules, Styled Components, SASS
+- Backend: Node.js, Express, Python, FastAPI
+- Bases de datos: PostgreSQL, MongoDB, Supabase, MySQL
+- Mobile: React Native, Expo
+- Herramientas: Git, Docker, AWS, Vercel, Netlify, Figma
+- Metodologías: Agile, Scrum, CI/CD
+
+PROYECTOS DESTACADOS:
+
+1. E-commerce Moderno
+   - Tecnologías: React, Node.js, PostgreSQL
+   - Características: Carrito de compras, pasarela de pago, panel admin
+   - Diseño completamente responsive
+
+2. Dashboard Analytics
+   - Tecnologías: Next.js, TypeScript, Chart.js
+   - Características: Gráficos en tiempo real, múltiples usuarios
+   - Optimizado para rendimiento
+
+3. Aplicación de Tareas
+   - Tecnologías: React Native, Expo, Supabase
+   - Características: Sincronización en tiempo real, notificaciones
+   - Disponible en iOS y Android
+
+EXPERIENCIA:
+- 3+ años desarrollando aplicaciones web y móviles
+- Experiencia en startups y empresas tecnológicas
+- Proyectos freelance para clientes internacionales
+- Contribuciones a código abierto
+
+EDUCACIÖN:
+- Ingeniería en Sistemas Computacionales
+- Certificaciones en AWS y React
+- Cursos especializados en arquitectura de software
+
+CONTACTO:
+- Email: desarrollador@ejemplo.com
+- LinkedIn: linkedin.com/in/tu-perfil
+- GitHub: github.com/tu-usuario
+- Portfolio: tu-portfolio.com
+
+INFORMACIÓN ADICIONAL:
+- Apasionado por el código limpio y las mejores prácticas
+- Experiencia en mentoring de desarrolladores junior
+- Habilidades en resolución de problemas complejos
+- Capacidad de trabajo en equipo y comunicación efectiva
