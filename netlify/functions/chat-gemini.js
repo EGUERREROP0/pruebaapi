@@ -244,6 +244,8 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const API_ACCESS_TOKEN = process.env.API_ACCESS_TOKEN;
 
 
+console.log("API ACCESS TOKEN configurado:", !!API_ACCESS_TOKEN);
+
 // Cache para el knowledge base
 let knowledgeBaseCache = null;
 let lastLoadTime = 0;
