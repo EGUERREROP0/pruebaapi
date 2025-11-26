@@ -1,3 +1,5 @@
+
+
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const corsHeaders = {
@@ -6,12 +8,64 @@ const corsHeaders = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS'
 };
 
-// Cargar API key desde variables de entorno de Netlify
+// const GEMINI_API_KEY = "";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
+// Cache para el conocimiento base
+let knowledgeBaseCache = null;
+let lastLoadTime = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+
 const loadKnowledgeBase = async () => {
-    return `
-DESARROLLADOR FULL-STACK
+    // Usar cache si está disponible y no ha expirado
+    if (knowledgeBaseCache && (Date.now() - lastLoadTime) < CACHE_DURATION) {
+        console.log(' Usando knowledge base desde cache');
+        return knowledgeBaseCache;
+    }
+
+    try {
+        // Determinar la URL base
+        let knowledgeBaseUrl;
+
+        if (process.env.NODE_ENV === 'development') {
+            // Desarrollo local
+            knowledgeBaseUrl = 'http://localhost:8888/knowledge-base.txt';
+        } else {
+            // Producción - usar URL absoluta
+            const siteUrl = process.env.URL;
+            knowledgeBaseUrl = `${siteUrl}/knowledge-base.txt`;
+        }
+
+        console.log(' Cargando knowledge base desde:', knowledgeBaseUrl);
+
+        const response = await fetch(knowledgeBaseUrl);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const knowledgeBase = await response.text();
+
+        // Validar que el contenido no esté vacío
+        if (!knowledgeBase || knowledgeBase.trim().length === 0) {
+            throw new Error('El archivo knowledge-base.txt está vacío');
+        }
+
+        // Actualizar cache
+        knowledgeBaseCache = knowledgeBase;
+        lastLoadTime = Date.now();
+
+        console.log(' Knowledge base cargado correctamente');
+        console.log(' Tamaño del contenido:', knowledgeBase.length, 'caracteres');
+
+        return knowledgeBase;
+
+    } catch (error) {
+        console.error(' Error cargando knowledge base:', error.message);
+
+        // Fallback robusto
+        const fallbackContent = `
+DESARROLLADOR FULL-STACK - INFORMACIÓN POR DEFECTO
 
 HABILIDADES TÉCNICAS:
 • Frontend: React, Next.js, TypeScript, JavaScript, Tailwind CSS
@@ -21,21 +75,19 @@ HABILIDADES TÉCNICAS:
 • Herramientas: Git, Docker, AWS, Vercel, Netlify
 
 PROYECTOS DESTACADOS:
-1. E-commerce moderno con carrito y pasarela de pago
-2. Dashboard administrativo con gráficos en tiempo real
-3. Aplicación móvil para gestión de tareas
-4. API REST con autenticación JWT y documentación
+NOTA: Verificar el archivo knowledge-base.txt para detalles completos.
 
 EXPERIENCIA:
-• 3+ años en desarrollo web y móvil
+• 0.5+ años en desarrollo web y móvil
 • Experiencia en startups y empresas tecnológicas
 • Proyectos freelance para clientes internacionales
 
-CONTACTO:
-• Email: contacto@portfolio.com
-• LinkedIn: linkedin.com/in/tuperfil
-• GitHub: github.com/tuusuario
+NOTA: Esta es información por defecto. Por favor verifica que el archivo knowledge-base.txt esté disponible en la carpeta public/.
 `;
+
+        console.log('🔄 Usando contenido por defecto');
+        return fallbackContent;
+    }
 };
 
 export async function handler(event, context) {
@@ -59,9 +111,9 @@ export async function handler(event, context) {
     try {
         const { message, history = [] } = JSON.parse(event.body);
 
-        console.log('🔧 Iniciando función chat-gemini...');
-        console.log('🔑 API Key configurada:', !!GEMINI_API_KEY);
-        console.log('📨 Mensaje:', message);
+        console.log(' Iniciando función chat-gemini...');
+        console.log(' API Key configurada:', !!GEMINI_API_KEY);
+        console.log(' Mensaje:', message);
 
         if (!GEMINI_API_KEY) {
             throw new Error('API Key no configurada');
@@ -75,7 +127,9 @@ export async function handler(event, context) {
             };
         }
 
+        // Cargar la base de conocimiento DESDE EL ARCHIVO
         const knowledgeBase = await loadKnowledgeBase();
+        console.log(' Knowledge base cargado, tamaño:', knowledgeBase.length);
 
         const systemContext = `Eres un asistente virtual especializado en responder sobre el portafolio de un desarrollador.
 
@@ -127,10 +181,10 @@ INSTRUCCIONES:
             parts: [{ text: message }]
         });
 
-        console.log('🚀 Enviando request a Gemini...');
+        console.log(' Enviando request a Gemini...');
         const result = await model.generateContent({ contents });
         const reply = result.response.text();
-        console.log('✅ Respuesta recibida');
+        console.log(' Respuesta recibida');
 
         return {
             statusCode: 200,
@@ -145,7 +199,7 @@ INSTRUCCIONES:
         };
 
     } catch (error) {
-        console.error('❌ Error completo:', error);
+        console.error(' Error completo:', error);
 
         // Respuesta de fallback mejorada
         const userMessage = JSON.parse(event.body)?.message?.toLowerCase() || '';
@@ -176,3 +230,5 @@ INSTRUCCIONES:
         };
     }
 }
+
+
