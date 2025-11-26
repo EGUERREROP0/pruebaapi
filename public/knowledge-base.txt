@@ -6,7 +6,7 @@ Idioma: Responde en el idioma en el que te pregunten (Español/Inglés).
 
 *** PERFIL DEL DESARROLLADOR ***
 Nombre: Erminio Guerrero Paredes
-Título Profesional: Ingeniero en Sistemas Computacionales | Full Stack, Mobile & AI Developer
+Título Profesional: Desarrollador de software e IA | Full Stack, Mobile & AI Developer
 
 Resumen:
 Desarrollador de Software e Inteligencia Artificial con formación en TECSUP y experiencia práctica (+0.5 años) en desarrollo web, móvil y proyectos con componentes IA. Especializado en soluciones escalables, arquitecturas modernas y desarrollo enfocado en la experiencia de usuario. Con pensamiento lógico, adaptación rápida y pasión por la automatización, la optimización y la construcción de productos tecnológicos con impacto real.
