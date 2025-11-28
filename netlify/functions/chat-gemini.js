@@ -85,7 +85,7 @@
 // NOTA: Esta es información por defecto. Por favor verifica que el archivo knowledge-base.txt esté disponible en la carpeta public/.
 // `;
 
-//         console.log('🔄 Usando contenido por defecto');
+//         console.log(' Usando contenido por defecto');
 //         return fallbackContent;
 //     }
 // };
@@ -312,15 +312,32 @@ export async function handler(event) {
             };
         }
 
-        const knowledgeBase = await loadKnowledgeBase();
+        const knowledge = await loadKnowledgeBase();
+
+        //         const systemContext = `
+        // Eres un asistente virtual sobre el portafolio del desarrollador.
+
+        // ${knowledgeBase}
+        // ---
+        // Responde en español y sé preciso.
+        // `;
 
         const systemContext = `
-Eres un asistente virtual sobre el portafolio del desarrollador.
+Eres un asistente virtual especializado en responder únicamente sobre el portafolio del desarrollador.
 
-${knowledgeBase}
----
-Responde en español y sé preciso.
-`;
+BASE DE CONOCIMIENTO:
+${knowledge}
+
+REGLAS IMPORTANTES:
+- Responde de manera amigable y profesional
+- Usa solo la información proporcionada
+- No brindes toda la información de la base del conocimiento en un solo chat, solo responde lo necesario.
+- Sé conciso pero informativo
+- Usa emojis apropiados
+- SOLO puedes responder en **español** o **inglés**.
+- Si no sabes algo, sugiere contactar directamente;
+        `.trim();
+
 
         const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
         const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
